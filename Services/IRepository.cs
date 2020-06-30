@@ -11,13 +11,14 @@ namespace GorilaXamDemoApi.Services
     {
         void Insert(TEntity entityToInsert);
         void Update(TEntity entityToUpdate);
-        IEnumerable<TEntity>Get(Expression<Func<TEntity,bool>> filter = null, 
+        IEnumerable<TEntity>Get(
+            Expression<Func<TEntity,bool>> filter = null, 
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderby = null, 
             string includeProperties="");
 
         TEntity GetById(object id);
         void Delete(object entityToDelete);
-            
+        void Delete(TEntity entityToDelete);
 
     }
 }

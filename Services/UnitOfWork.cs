@@ -9,7 +9,7 @@ namespace GorilaXamDemoApi.Services
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private GorilaDemoContext _context;
+        private GorilaDemoContext _dbContext;
         private BaseRepository<Usuario> _usuario;
         private BaseRepository<Ciudad> _ciudad;
         private BaseRepository<Compra> _compra;
@@ -20,7 +20,7 @@ namespace GorilaXamDemoApi.Services
 
         public UnitOfWork(GorilaDemoContext dbcontext)
         {
-            _context = dbcontext;
+            _dbContext = dbcontext;
         }
 
 
@@ -28,49 +28,49 @@ namespace GorilaXamDemoApi.Services
         {
             get 
             {
-                return _usuario ?? (_usuario = new BaseRepository<Usuario>(_context));
+                return _usuario ?? (_usuario = new BaseRepository<Usuario>(_dbContext));
             }
         }
         public IRepository<Ciudad> Ciudades
         {
             get
             {
-                return _ciudad ?? (_ciudad = new BaseRepository<Ciudad>(_context));
+                return _ciudad ?? (_ciudad = new BaseRepository<Ciudad>(_dbContext));
             }
         }
         public IRepository<Compra> Compras
         {
             get
             {
-                return _compra ?? (_compra = new BaseRepository<Compra>(_context));
+                return _compra ?? (_compra = new BaseRepository<Compra>(_dbContext));
             }
         }
         public IRepository<Comuna> Comunas
         {
             get
             {
-                return _comuna ?? (_comuna = new BaseRepository<Comuna>(_context));
+                return _comuna ?? (_comuna = new BaseRepository<Comuna>(_dbContext));
             }
         }
         public IRepository<Pedido> Pedidos
         {
             get
             {
-                return _pedido ?? (_pedido = new BaseRepository<Pedido>(_context));
+                return _pedido ?? (_pedido = new BaseRepository<Pedido>(_dbContext));
             }
         }
         public IRepository<Producto> Productos
         {
             get
             {
-                return _producto ?? (_producto = new BaseRepository<Producto>(_context));
+                return _producto ?? (_producto = new BaseRepository<Producto>(_dbContext));
             }
         }
         public IRepository<Tienda> Tiendas
         {
             get
             {
-                return _tienda ?? (_tienda = new BaseRepository<Tienda>(_context));
+                return _tienda ?? (_tienda = new BaseRepository<Tienda>(_dbContext));
             }
         }
         
@@ -79,7 +79,7 @@ namespace GorilaXamDemoApi.Services
 
         public void Save()
         {
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

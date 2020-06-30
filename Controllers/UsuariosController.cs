@@ -12,6 +12,7 @@ namespace GorilaXamDemoApi.Controllers
     [Route("api/v1/GorilaXamDemoApi/[controller]")]
     public class UsuariosController : Controller
     {
+        // 30-06-2020 cambios
         //dependencias inicializadas
         private GorilaDemoContext _context = new GorilaDemoContext();
         private UnitOfWork _unitOfWork = new UnitOfWork(new GorilaDemoContext());

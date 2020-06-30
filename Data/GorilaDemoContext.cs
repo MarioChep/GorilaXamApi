@@ -199,8 +199,6 @@ namespace GorilaXamDemoApi.Entities.Models
                     .HasConstraintName("FK_Usuario_Comuna");
             });
 
-            modelBuilder.HasSequence<int>("SalesOrderNumber", "SalesLT");
-
             OnModelCreatingPartial(modelBuilder);
         }
 
