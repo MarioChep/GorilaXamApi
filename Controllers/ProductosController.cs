@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar productos por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Producto productos = _unitOfWork.Productos.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete Producto
-        [HttpDelete("id")]
-        public IActionResult DeleteProducto(int id)
+        [HttpDelete]
+        public IActionResult DeleteProducto([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Producto con id Invalida");
             }
         }
-        
+
+        //Crear Producto
+        [HttpPost]
+        public IActionResult Create([FromBody] Producto producto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Productos.Insert(producto);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", producto);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(producto);
+        }
+
         #endregion
 
 

@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar compras por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Compra compras = _unitOfWork.Compras.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete Compra
-        [HttpDelete("id")]
-        public IActionResult DeleteCompra(int id)
+        [HttpDelete]
+        public IActionResult DeleteCompra([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Compra con id Invalida");
             }
         }
-        
+
+        //Crear compras
+        [HttpPost]
+        public IActionResult Create([FromBody] Compra compra)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Compras.Insert(compra);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", compra);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(compra);
+        }
+
         #endregion
 
 

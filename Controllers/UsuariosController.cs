@@ -35,7 +35,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar Usuarios por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Usuario usuario = _unitOfWork.Usuarios.GetById(id);
@@ -74,8 +74,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete Cliente
-        [HttpDelete("id")]
-        public IActionResult DeleteUser(int id)
+        [HttpDelete]
+        public IActionResult DeleteUser([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -88,7 +88,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Usuario con id Invalido");
             }
         }
-        
+
+        //Crear Usuario
+        [HttpPost]
+        public IActionResult Create([FromBody] Usuario usuario)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Usuarios.Insert(usuario);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", usuario);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(usuario);
+        }
+
         #endregion
 
 

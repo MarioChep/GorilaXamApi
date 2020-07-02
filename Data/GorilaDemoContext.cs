@@ -37,9 +37,6 @@ namespace GorilaXamDemoApi.Entities.Models
         {
             modelBuilder.Entity<Ciudad>(entity =>
             {
-                entity.Property(e => e.CiudadId)
-                    .HasColumnName("CiudadID")
-                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
@@ -48,10 +45,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Compra>(entity =>
             {
-                entity.Property(e => e.CompraId)
-                    .HasColumnName("CompraID")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(500)
                     .IsUnicode(false);
@@ -79,10 +72,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Comuna>(entity =>
             {
-                entity.Property(e => e.ComunaId)
-                    .HasColumnName("ComunaID")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.CiudadId).HasColumnName("CiudadID");
 
                 entity.Property(e => e.Nombre)
@@ -97,9 +86,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Pedido>(entity =>
             {
-                entity.Property(e => e.PedidoId)
-                    .HasColumnName("PedidoID")
-                    .ValueGeneratedNever();
 
                 entity.Property(e => e.FechaEntrega).HasColumnType("date");
 
@@ -117,10 +103,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.Property(e => e.ProductoId)
-                    .HasColumnName("ProductoID")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(500)
                     .IsUnicode(false);
@@ -140,10 +122,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Tienda>(entity =>
             {
-                entity.Property(e => e.TiendaId)
-                    .HasColumnName("TiendaID")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.ComunaId).HasColumnName("ComunaID");
 
                 entity.Property(e => e.Direccion)
@@ -171,9 +149,6 @@ namespace GorilaXamDemoApi.Entities.Models
 
             modelBuilder.Entity<Usuario>(entity =>
             {
-                entity.Property(e => e.UsuarioId)
-                    .HasColumnName("UsuarioID")
-                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Apellido)
                     .HasMaxLength(150)

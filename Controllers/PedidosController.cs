@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar pedido por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Pedido pedidos = _unitOfWork.Pedidos.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete pedido
-        [HttpDelete("id")]
-        public IActionResult DeletePedidos(int id)
+        [HttpDelete]
+        public IActionResult DeletePedidos([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Pedido con id Invalida");
             }
         }
-        
+
+        //Crear pedido
+        [HttpPost]
+        public IActionResult Create([FromBody] Pedido pedido)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Pedidos.Insert(pedido);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", pedido);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(pedido);
+        }
+
         #endregion
 
 

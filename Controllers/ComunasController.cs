@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar comunas por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Comuna comunas = _unitOfWork.Comunas.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete comuna
-        [HttpDelete("id")]
-        public IActionResult DeleteComuna(int id)
+        [HttpDelete]
+        public IActionResult DeleteComuna([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Comuna con id Invalida");
             }
         }
-        
+
+        //Crear comuna
+        [HttpPost]
+        public IActionResult Create([FromBody] Comuna comuna)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Comunas.Insert(comuna);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", comuna);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(comuna);
+        }
+
         #endregion
 
 

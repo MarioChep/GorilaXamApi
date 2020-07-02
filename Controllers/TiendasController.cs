@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar tienda por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Tienda tiendas = _unitOfWork.Tiendas.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Delete tiendas
-        [HttpDelete("id")]
-        public IActionResult DeleteTiendas(int id)
+        [HttpDelete]
+        public IActionResult DeleteTiendas([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Tienda con id Invalida");
             }
         }
-        
+
+        //Crear tienda
+        [HttpPost]
+        public IActionResult Create([FromBody] Tienda tienda)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Tiendas.Insert(tienda);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", tienda);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(tienda);
+        }
+
         #endregion
 
 

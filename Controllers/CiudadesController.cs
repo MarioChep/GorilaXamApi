@@ -34,7 +34,7 @@ namespace GorilaXamDemoApi.Controllers
         }
 
         //Buscar ciudades por ID
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             Ciudad ciudades = _unitOfWork.Ciudades.GetById(id);
@@ -73,8 +73,8 @@ namespace GorilaXamDemoApi.Controllers
         }
         
         //Delete Ciudad
-        [HttpDelete("id")]
-        public IActionResult DeleteCiudad(int id)
+        [HttpDelete]
+        public IActionResult DeleteCiudad([FromHeader] int id)
         {
             if(id != 0)
             {
@@ -87,7 +87,27 @@ namespace GorilaXamDemoApi.Controllers
                 return BadRequest("Ciudad con id Invalida");
             }
         }
-        
+
+        //Crear Usuario
+        [HttpPost]
+        public IActionResult Create([FromBody] Ciudad ciudad)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _unitOfWork.Ciudades.Insert(ciudad);
+                    _unitOfWork.Save();
+                    return Created("GorilaDemo/Create", ciudad);
+                }
+            }
+            catch (DataException ex)
+            {
+                return BadRequest(ex);
+            }
+            return BadRequest(ciudad);
+        }
+
         #endregion
 
 
